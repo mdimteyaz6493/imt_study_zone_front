@@ -1,0 +1,268 @@
+.coming-soon {
+  position: relative;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 60px 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(79, 70, 229, 0.08),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(124, 58, 237, 0.08),
+      transparent 30%
+    ),
+    #ffffff;
+}
+
+.coming-soon-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.coming-soon-glow-1 {
+  width: 220px;
+  height: 220px;
+  top: -100px;
+  left: -70px;
+  background: rgba(99, 102, 241, 0.12);
+}
+
+.coming-soon-glow-2 {
+  width: 220px;
+  height: 220px;
+  right: -80px;
+  bottom: -100px;
+  background: rgba(124, 58, 237, 0.12);
+}
+
+/* Content */
+
+.coming-soon-content {
+  position: relative;
+  z-index: 2;
+  width: min(600px, 100%);
+  text-align: center;
+}
+
+/* Icon */
+
+.coming-soon-icon {
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  border: 1px solid #e0e7ff;
+  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    #eef2ff,
+    #f3e8ff
+  );
+  box-shadow:
+    0 12px 30px rgba(79, 70, 229, 0.08);
+  animation: comingFloat 3s ease-in-out infinite;
+}
+
+.coming-soon-icon span {
+  font-size: 29px;
+}
+
+@keyframes comingFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* Badge */
+
+.coming-soon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px;
+  border: 1px solid #e0e7ff;
+  border-radius: 999px;
+  background: #f8faff;
+  color: #4f46e5;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.coming-soon-badge span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6366f1;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  animation: comingPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes comingPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.45;
+    transform: scale(0.7);
+  }
+}
+
+/* Heading */
+
+.coming-soon h1 {
+  margin: 18px 0 14px;
+  color: #111827;
+  font-size: clamp(38px, 5vw, 56px);
+  line-height: 1.05;
+  font-weight: 900;
+  letter-spacing: -2.5px;
+}
+
+.coming-soon h1 span {
+  display: block;
+  margin-top: 5px;
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #7c3aed
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Description */
+
+.coming-soon-content > p {
+  max-width: 500px;
+  margin: 0 auto;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+/* Features */
+
+.coming-soon-features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.coming-soon-feature {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  border: 1px solid #eef2f7;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.coming-soon-feature span {
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background: #ecfdf5;
+  color: #059669;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.coming-soon-feature p {
+  margin: 0;
+  color: #64748b;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+/* Bottom */
+
+.coming-soon-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 35px;
+}
+
+.coming-soon-line span {
+  width: 45px;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.coming-soon-line p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .coming-soon {
+    min-height: 460px;
+    padding: 45px 18px;
+    border-radius: 16px;
+  }
+
+  .coming-soon-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+  }
+
+  .coming-soon-icon span {
+    font-size: 25px;
+  }
+
+  .coming-soon h1 {
+    font-size: 38px;
+    letter-spacing: -1.8px;
+  }
+
+  .coming-soon-content > p {
+    font-size: 12px;
+  }
+
+  .coming-soon-features {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .coming-soon-feature {
+    justify-content: flex-start;
+  }
+}
