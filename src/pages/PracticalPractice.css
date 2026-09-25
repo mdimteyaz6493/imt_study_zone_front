@@ -353,10 +353,11 @@
 .practical-data-table td {
   padding: 10px 12px;
   border-bottom: 1px solid #f1f5f9;
-  color: #4b5563;
+  color: #000000;
   font-family: "Courier New", monospace;
   font-size: 11px;
   white-space: nowrap;
+  font-weight: 500;
 }
 
 .practical-data-table tbody tr:last-child td {
@@ -417,7 +418,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   background: #f9fafb;
-  color: #6b7280;
+  color: #020202;
   font-size: 12px;
   font-weight: 800;
 }
@@ -427,12 +428,13 @@
   min-width: 0;
   margin: 0;
   overflow-x: auto;
-  color: #374151;
+  color: #060606;
   font-family: "Courier New", Courier, monospace;
   font-size: 12px;
   line-height: 1.6;
   white-space: pre-wrap;
   word-break: break-word;
+  font-weight: 600;
 }
 
 .practical-option-status {

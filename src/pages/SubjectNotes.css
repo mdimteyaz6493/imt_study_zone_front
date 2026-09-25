@@ -690,8 +690,8 @@
 
   .notes-topbar {
     height: 64px;
-
     padding: 0 14px;
+
   }
 
   .notes-layout {
@@ -727,10 +727,10 @@
 
     cursor: pointer;
   }
-
+/* 
   .notes-back-button span {
     display: none;
-  }
+  } */
 
   .notes-topbar-divider {
     display: none;
@@ -819,7 +819,14 @@
   }
 
   .notes-back-button {
-    font-size: 18px;
+    font-size: 12px;
+   background-color: #3730a3;
+   padding: 8px 10px;
+   color: white;
+   font-weight: normal;
+   border-radius: 10px;
+   position: absolute;
+   right: 20px;
   }
 
   .notes-article-header h1 {

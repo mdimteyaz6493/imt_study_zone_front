@@ -220,19 +220,6 @@ function SubjectNotes() {
 
           <div className="notes-topbar-divider"></div>
 
-          <div className="notes-topbar-subject">
-            <span className="notes-topbar-icon">
-              {subject?.icon ||
-                subject?.name
-                  ?.slice(0, 2)
-                  .toUpperCase()}
-            </span>
-
-            <strong>
-              {subject?.name}
-            </strong>
-          </div>
-
         </div>
 
         <div className="notes-topbar-right">

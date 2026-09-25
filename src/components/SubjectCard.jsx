@@ -1,71 +1,20 @@
-import { useNavigate } from "react-router-dom";
-import "./SubjectCard.css";
+import { Link } from "react-router-dom";
+import "./subjectCard.css";
 
 function SubjectCard({ subject }) {
-  const navigate = useNavigate();
-
-  const handlePractice = () => {
-    navigate(`/subject/${subject.slug}`);
-  };
-
   return (
-    <div className="subject-card">
-
-      {/* TOP */}
-      <div className="subject-card-top">
-
-        <div className="subject-icon">
-          {subject.icon || subject.name?.slice(0, 2).toUpperCase()}
-        </div>
-
+    <Link
+      to={`/subject/${subject.slug}`}
+      className="subject-card"
+    >
+      <div className="subject-card-icon">
+        {subject.icon || "📚"}
       </div>
 
-
-      {/* CONTENT */}
-      <div className="subject-card-content">
-
-        <h3>
-          {subject.name}
-        </h3>
-
-        <p>
-          {subject.description ||
-            `Practice ${subject.name} interview questions and improve your knowledge.`}
-        </p>
-
-      </div>
+      <h3>{subject.name}</h3>
 
 
-      {/* INFO */}
-      <div className="subject-card-info">
-
-        <span>
-          50 Questions
-        </span>
-
-        <span>
-          MCQ
-        </span>
-
-      </div>
-
-
-      {/* BUTTON */}
-      <button
-        type="button"
-        className="subject-practice-button"
-        onClick={handlePractice}
-      >
-        <span>
-          Start Practice
-        </span>
-
-        <span className="subject-button-arrow">
-          →
-        </span>
-      </button>
-
-    </div>
+    </Link>
   );
 }
 

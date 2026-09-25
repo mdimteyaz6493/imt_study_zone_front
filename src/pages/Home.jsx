@@ -241,12 +241,12 @@ function Home() {
               </p>
             </div>
 
-            {!loading && !error && subjects.length > 0 && (
+            {/* {!loading && !error && subjects.length > 0 && (
               <div className="subject-count">
                 <strong>{subjects.length}</strong>
                 <span>Subjects Available</span>
               </div>
-            )}
+            )} */}
 
           </div>
 
@@ -279,24 +279,31 @@ function Home() {
             )}
 
 
-          {/* SUBJECT CARDS */}
+  
+{/* SUBJECT CARDS */}
 
-          {!loading &&
-            !error &&
-            subjects.length > 0 && (
+{!loading &&
+  !error &&
+  subjects.length > 0 && (
+    <>
+      <div className="subjects-grid">
+        {subjects.map((subject) => (
+          <SubjectCard
+            key={subject._id}
+            subject={subject}
+          />
+        ))}
+      </div>
 
-              <div className="subjects-grid">
-
-                {subjects.map((subject) => (
-                  <SubjectCard
-                    key={subject._id}
-                    subject={subject}
-                  />
-                ))}
-
-              </div>
-
-            )}
+      {/* ALL PRACTICE SET BUTTON */}
+      <div className="all-practice-wrapper">
+        <a href="/practice-sets" className="all-practice-button">
+          View All Practice Sets
+          <span>→</span>
+        </a>
+      </div>
+    </>
+  )}
 
         </div>
 

@@ -12,36 +12,52 @@ function Notes() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        setLoading(true);
-        setError("");
+  const fetchNotes = async () => {
+    try {
+      setLoading(true);
+      setError("");
 
-        const data = await getNoteSubjects();
+      const data = await getNoteSubjects();
 
-        setSubjects(data.subjects || []);
-      } catch (err) {
-        console.error(err);
-        setError("Unable to load notes right now.");
-      } finally {
-        setLoading(false);
+      console.log("Notes API Response:", data);
+
+      // API response handle
+      if (Array.isArray(data)) {
+        setSubjects(data);
+      } else if (Array.isArray(data?.subjects)) {
+        setSubjects(data.subjects);
+      } else {
+        setSubjects([]);
       }
-    };
+    } catch (err) {
+      console.error("Notes API Error:", err);
 
+      setError(
+        err?.response?.data?.message ||
+        err?.message ||
+        "Unable to load notes right now."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchNotes();
   }, []);
 
   return (
     <div className="notes-page">
 
-      {/* HERO */}
+      {/* =========================================
+          HERO
+      ========================================= */}
+
       <section className="notes-hero">
         <div className="notes-hero-glow notes-hero-glow-one"></div>
         <div className="notes-hero-glow notes-hero-glow-two"></div>
 
         <div className="notes-container">
-
           <div className="notes-hero-content">
 
             <div className="notes-badge">
@@ -61,16 +77,19 @@ function Notes() {
             </p>
 
           </div>
-
         </div>
       </section>
 
-      {/* SUBJECTS */}
+      {/* =========================================
+          SUBJECTS
+      ========================================= */}
+
       <section className="notes-subjects-section">
 
         <div className="notes-container">
 
           <div className="notes-section-header">
+
             <div>
               <span className="notes-section-label">
                 STUDY MATERIAL
@@ -84,14 +103,19 @@ function Notes() {
                 Select a subject to explore topic-wise notes.
               </p>
             </div>
-
+{/* 
             {!loading && !error && (
               <div className="notes-total">
                 <strong>{subjects.length}</strong>
                 <span>Subjects</span>
               </div>
-            )}
+            )} */}
+
           </div>
+
+          {/* =========================================
+              LOADING
+          ========================================= */}
 
           {loading && (
             <div className="notes-loading">
@@ -100,8 +124,13 @@ function Notes() {
             </div>
           )}
 
-          {error && (
+          {/* =========================================
+              ERROR
+          ========================================= */}
+
+          {!loading && error && (
             <div className="notes-error">
+
               <div className="notes-error-icon">
                 !
               </div>
@@ -110,21 +139,29 @@ function Notes() {
                 Something went wrong
               </h3>
 
-              <p>{error}</p>
+              <p>
+                {error}
+              </p>
 
               <button
                 type="button"
-                onClick={() => window.location.reload()}
+                onClick={fetchNotes}
               >
                 Try Again
               </button>
+
             </div>
           )}
+
+          {/* =========================================
+              EMPTY
+          ========================================= */}
 
           {!loading &&
             !error &&
             subjects.length === 0 && (
               <div className="notes-empty">
+
                 <div className="notes-empty-icon">
                   📚
                 </div>
@@ -137,17 +174,24 @@ function Notes() {
                   Study notes for different subjects
                   will be available here.
                 </p>
+
               </div>
             )}
+
+          {/* =========================================
+              SUBJECTS
+          ========================================= */}
 
           {!loading &&
             !error &&
             subjects.length > 0 && (
+
               <div className="notes-subject-grid">
 
                 {subjects.map((subject) => (
+
                   <article
-                    key={subject._id}
+                    key={subject._id || subject.slug}
                     className="notes-subject-card"
                     onClick={() =>
                       navigate(`/notes/${subject.slug}`)
@@ -160,12 +204,11 @@ function Notes() {
                         {subject.icon ||
                           subject.name
                             ?.slice(0, 2)
-                            .toUpperCase()}
+                            .toUpperCase() ||
+                          "📚"}
                       </div>
 
-                      <span className="notes-card-arrow">
-                        →
-                      </span>
+
 
                     </div>
 
@@ -184,36 +227,18 @@ function Notes() {
 
                     <div className="notes-card-bottom">
 
-                      <div className="notes-topic-count">
-                        <span>▤</span>
+                     
 
-                        {subject.topicCount || 0}
-
-                        <small>
-                          Topics
-                        </small>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={(event) => {
-                          event.stopPropagation();
-
-                          navigate(
-                            `/notes/${subject.slug}`
-                          );
-                        }}
-                      >
-                        Explore Notes
-                        <span>→</span>
-                      </button>
+                     
 
                     </div>
 
                   </article>
+
                 ))}
 
               </div>
+
             )}
 
         </div>

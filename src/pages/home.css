@@ -1128,6 +1128,62 @@
   font-size: 10px;
 }
 
+/* =========================================================
+   ALL PRACTICE SET BUTTON
+========================================================= */
+
+.all-practice-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 38px;
+}
+
+.all-practice-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  padding: 14px 24px;
+
+  border: 1px solid #c7d2fe;
+  border-radius: 12px;
+
+  background: #eef2ff;
+  color: #4f46e5;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.all-practice-button span {
+  font-size: 18px;
+  line-height: 1;
+
+  transition: transform 0.25s ease;
+}
+
+.all-practice-button:hover {
+  background: #e0e7ff;
+  color: #4338ca;
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 30px rgba(79, 70, 229, 0.12);
+}
+
+.all-practice-button:hover span {
+  transform: translateX(4px);
+}
+
 
 /* =========================================================
    TABLET
@@ -1474,6 +1530,19 @@
 
   .question-map {
     grid-template-columns: repeat(5, 1fr);
+  }
+
+}
+
+@media (max-width: 650px) {
+
+  .all-practice-wrapper {
+    margin-top: 28px;
+  }
+
+  .all-practice-button {
+    width: 100%;
+    padding: 14px 18px;
   }
 
 }

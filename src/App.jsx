@@ -9,6 +9,7 @@ import PracticalPractice from "./pages/PracticalPractice";
 import Navbar from "./components/Navbar";
 import Notes from "./pages/Notes";
 import SubjectNotes from "./pages/SubjectNotes";
+import PracticeSets from "./pages/PracticeSets";
 
 function App() {
   return (
@@ -22,6 +23,11 @@ function App() {
           path="/"
           element={<Home />}
         />
+
+        <Route
+  path="/practice-sets"
+  element={<PracticeSets />}
+/>
 
           <Route
           path="/notes"
