@@ -1,0 +1,121 @@
+
+/* =========================================
+   CODING PAGE
+========================================= */
+
+.coding-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 30px 20px 50px;
+
+  background: #f5f7fb;
+}
+
+.coding-container {
+  width: 100%;
+  max-width: 1500px;
+
+  margin: 0 auto;
+}
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.coding-heading {
+  margin-bottom: 24px;
+}
+
+.coding-heading h1 {
+  margin: 0 0 7px;
+
+  color: #111827;
+
+  font-size: 28px;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.coding-heading p {
+  margin: 0;
+
+  max-width: 650px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   WORKSPACE
+========================================= */
+
+.coding-workspace {
+  width: 100%;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .coding-page {
+    padding: 25px 15px 40px;
+  }
+
+  .coding-heading {
+    margin-bottom: 20px;
+  }
+
+  .coding-heading h1 {
+    font-size: 25px;
+  }
+
+  .coding-heading p {
+    font-size: 13px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .coding-page {
+    padding: 20px 10px 35px;
+  }
+
+  .coding-heading {
+    margin-bottom: 16px;
+  }
+
+  .coding-heading h1 {
+    font-size: 22px;
+  }
+
+  .coding-heading p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+  .coding-page {
+    padding: 16px 8px 30px;
+  }
+
+  .coding-heading h1 {
+    font-size: 20px;
+  }
+
+  .coding-heading p {
+    font-size: 11px;
+  }
+}
+

@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Loading from "../components/Loading";
 import ErrorMessage from "../components/ErrorMessage";
+import { IoIosArrowBack } from "react-icons/io";
+
 
 import {
   getQuestions,
@@ -18,6 +20,7 @@ const Practice = () => {
 
   const [questions, setQuestions] = useState([]);
   const [subject, setSubject] = useState(null);
+  const [isResultExpanded, setIsResultExpanded] = useState(false);
 
   // Stores answer result for every question
   // Example:
@@ -41,6 +44,18 @@ const Practice = () => {
   useEffect(() => {
     loadQuestions();
   }, [slug]);
+
+  useEffect(() => {
+  if (isResultExpanded && window.innerWidth <= 768) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [isResultExpanded]);
 
   const loadQuestions = async () => {
     try {
@@ -233,8 +248,8 @@ const Practice = () => {
             className="practice-back-button"
             onClick={handleBack}
           >
-            <span>←</span>
-            Exit Practice
+            <span><IoIosArrowBack /></span>
+            <span className="exit-label">Exit Practice</span>
           </button>
 
           <div className="practice-subject">
@@ -274,6 +289,18 @@ const Practice = () => {
         ====================================== */}
 
         <div className="practice-layout">
+
+
+        {/* Mobile Result Floating Button */}
+<button
+  type="button"
+  className="mobile-result-floating-button"
+  onClick={() => setIsResultExpanded(true)}
+>
+  <span>🎯</span>
+  <span>Result</span>
+  <strong>{answeredCount}/{totalQuestions}</strong>
+</button>
 
           {/* ====================================
               LEFT - ALL QUESTIONS
@@ -628,13 +655,29 @@ const Practice = () => {
 
           </div>
 
+          {isResultExpanded && (
+  <div
+    className="result-sidebar-overlay"
+    onClick={() => setIsResultExpanded(false)}
+  />
+)}
+
           {/* ====================================
               RIGHT - RESULT SIDEBAR
           ==================================== */}
 
           <aside className="practice-result-sidebar">
 
-            <div className="result-sidebar-card">
+           <div
+  className={`result-sidebar-card ${
+    isResultExpanded ? "result-sidebar-expanded" : ""
+  }`}
+  onClick={() => {
+    if (window.innerWidth <= 768) {
+      setIsResultExpanded((prev) => !prev);
+    }
+  }}
+>
 
               {/* Sidebar Header */}
               <div className="result-sidebar-header">
@@ -652,6 +695,17 @@ const Practice = () => {
                 <div className="result-sidebar-icon">
                   🎯
                 </div>
+
+                 <button
+      type="button"
+      className="mobile-result-close"
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsResultExpanded(false);
+      }}
+    >
+      ✕
+    </button>
 
               </div>
 

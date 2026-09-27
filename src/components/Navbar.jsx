@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getSubjects } from "../services/api";
-import { RiArrowDownSLine } from "react-icons/ri";
-
+import { RiArrowDownSLine, RiSearchLine, RiCloseLine } from "react-icons/ri";
+import { getSubjects, getNoteSubjects } from "../services/api";
 
 import "./navbar.css";
 
@@ -30,28 +29,82 @@ const TECHNICAL_SLUGS = [
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [practiceOpen, setPracticeOpen] = useState(false);
+
   const [subjects, setSubjects] = useState([]);
+  const [noteSubjects, setNoteSubjects] = useState([]);
+
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const searchInputRef = useRef(null);
 
   const location = useLocation();
   const navigate = useNavigate();
 
+  /* =========================================================
+     LOAD SUBJECTS + NOTE SUBJECTS
+  ========================================================= */
+
   useEffect(() => {
-    const loadSubjects = async () => {
+    const loadNavbarData = async () => {
       try {
-        const data = await getSubjects();
-        setSubjects(data?.subjects || []);
+        const [subjectData, noteData] = await Promise.all([
+          getSubjects(),
+          getNoteSubjects(),
+        ]);
+
+        setSubjects(subjectData?.subjects || []);
+
+        setNoteSubjects(noteData?.subjects || []);
       } catch (error) {
-        console.error("Failed to load subjects:", error);
+        console.error("Failed to load navbar data:", error);
+
+        // Subjects ko independently load karne ki fallback
+        try {
+          const subjectData = await getSubjects();
+          setSubjects(subjectData?.subjects || []);
+        } catch (subjectError) {
+          console.error("Failed to load subjects:", subjectError);
+        }
       }
     };
 
-    loadSubjects();
+    loadNavbarData();
   }, []);
+
+  /* =========================================================
+     CLOSE SEARCH ON ROUTE CHANGE
+  ========================================================= */
+
+  useEffect(() => {
+    setSearchOpen(false);
+    setSearchQuery("");
+  }, [location.pathname]);
+
+  /* =========================================================
+     FOCUS MOBILE SEARCH INPUT
+  ========================================================= */
+
+  useEffect(() => {
+    if (searchOpen) {
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 50);
+    }
+  }, [searchOpen]);
+
+  /* =========================================================
+     CLOSE MENU
+  ========================================================= */
 
   const closeMenu = () => {
     setMenuOpen(false);
     setPracticeOpen(false);
   };
+
+  /* =========================================================
+     SUBJECTS
+  ========================================================= */
 
   const goToSubjects = () => {
     closeMenu();
@@ -83,26 +136,208 @@ const Navbar = () => {
 
   const isPracticePage = location.pathname === "/practice-sets";
 
+  /* =========================================================
+     SEARCH
+  ========================================================= */
+
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  const searchResults =
+    normalizedQuery.length > 0
+      ? subjects.filter((subject) => {
+          const name = subject.name?.toLowerCase() || "";
+          const slug = subject.slug?.toLowerCase() || "";
+
+          return (
+            name.includes(normalizedQuery) ||
+            slug.includes(normalizedQuery)
+          );
+        })
+      : [];
+
+  /* =========================================================
+     CHECK WHETHER SUBJECT HAS NOTES
+  ========================================================= */
+
+  const hasNotes = (subject) => {
+    return noteSubjects.some(
+      (noteSubject) =>
+        noteSubject.slug === subject.slug ||
+        noteSubject._id === subject._id
+    );
+  };
+
+  /* =========================================================
+     SEARCH RESULT CLICK
+  ========================================================= */
+
+  const openPractice = (slug) => {
+    setSearchOpen(false);
+    setSearchQuery("");
+    closeMenu();
+
+    navigate(`/subject/${slug}`);
+  };
+
+  const openNotes = (slug) => {
+    setSearchOpen(false);
+    setSearchQuery("");
+    closeMenu();
+
+    navigate(`/notes/${slug}`);
+  };
+
+  /* =========================================================
+     SEARCH INPUT
+  ========================================================= */
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery("");
+    searchInputRef.current?.focus();
+  };
+
+  const closeSearch = () => {
+    setSearchQuery("");
+    setSearchOpen(false);
+  };
+
+  /* =========================================================
+     SEARCH RESULTS COMPONENT
+  ========================================================= */
+
+  const SearchResults = ({ mobile = false }) => {
+    if (!searchOpen || !normalizedQuery) {
+      return null;
+    }
+
+    return (
+      <div
+        className={`navbar-search-results ${
+          mobile ? "mobile-search-results" : ""
+        }`}
+      >
+        {searchResults.length > 0 ? (
+          <>
+            <div className="search-results-title">
+              Search results
+            </div>
+
+            {searchResults.map((subject) => {
+              const subjectHasNotes = hasNotes(subject);
+
+              return (
+                <div
+                  className="search-result-subject"
+                  key={subject._id}
+                >
+                  {/* Practice Set */}
+                  <button
+                    type="button"
+                    className="search-result-item"
+                    onClick={() => openPractice(subject.slug)}
+                  >
+                    <span className="search-result-icon practice-icon">
+                      📝
+                    </span>
+
+                    <span className="search-result-content">
+                      <strong>
+                        {subject.name} Practice Set
+                      </strong>
+
+                      <small>
+                        Practice questions and MCQs
+                      </small>
+                    </span>
+
+                    <span className="search-result-arrow">
+                      →
+                    </span>
+                  </button>
+
+                  {/* Notes - only if available */}
+                  {subjectHasNotes && (
+                    <button
+                      type="button"
+                      className="search-result-item"
+                      onClick={() => openNotes(subject.slug)}
+                    >
+                      <span className="search-result-icon notes-icon">
+                        📖
+                      </span>
+
+                      <span className="search-result-content">
+                        <strong>
+                          {subject.name} Notes
+                        </strong>
+
+                        <small>
+                          Topic-wise study notes
+                        </small>
+                      </span>
+
+                      <span className="search-result-arrow">
+                        →
+                      </span>
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          <div className="search-no-results">
+            <div className="search-no-results-icon">
+              🔍
+            </div>
+
+            <div>
+              <strong>No results found</strong>
+              <span>
+                Try another subject name
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <header className="navbar">
       <div className="navbar-container">
 
-        {/* Logo */}
-        <Link
-          to="/"
-          className="navbar-logo"
-          onClick={closeMenu}
-        >
-          <span className="logo-icon">
-            <img src="/icon.jpg" alt="IMT Study Zone" />
-          </span>
+        {/* =====================================================
+            LOGO
+        ===================================================== */}
 
-          <span className="logo-text">
-            <span>IMT </span>STUDY ZONE
-          </span>
-        </Link>
+        {!searchOpen && (
+          <Link
+            to="/"
+            className="navbar-logo"
+            onClick={closeMenu}
+          >
+            <span className="logo-icon">
+              <img
+                src="/icon.jpg"
+                alt="IMT Study Zone"
+              />
+            </span>
 
-        {/* Desktop Navigation */}
+            <span className="logo-text">
+              <span>IMT </span>STUDY ZONE
+            </span>
+          </Link>
+        )}
+
+        {/* =====================================================
+            DESKTOP NAVIGATION
+        ===================================================== */}
+
         <nav className="navbar-menu">
 
           <Link
@@ -131,7 +366,10 @@ const Navbar = () => {
             Subjects
           </button>
 
-          {/* Practice Sets */}
+          {/* =================================================
+              PRACTICE SETS
+          ================================================= */}
+
           <div
             className={`practice-dropdown-wrapper ${
               isPracticePage ? "active" : ""
@@ -142,10 +380,15 @@ const Navbar = () => {
             <button
               type="button"
               className="nav-link practice-dropdown-trigger"
-              onClick={() => setPracticeOpen(!practiceOpen)}
+              onClick={() =>
+                setPracticeOpen(!practiceOpen)
+              }
             >
               Practice Sets
-              <span className="dropdown-arrow"><RiArrowDownSLine/></span>
+
+              <span className="dropdown-arrow">
+                <RiArrowDownSLine />
+              </span>
             </button>
 
             <div className="practice-dropdown-menu">
@@ -190,7 +433,7 @@ const Navbar = () => {
                 </div>
               </div>
 
-              {/* All Subjects */}
+              {/* All Practice Sets */}
               <Link
                 to="/practice-sets"
                 className="practice-all-subjects"
@@ -204,34 +447,128 @@ const Navbar = () => {
           </div>
         </nav>
 
-        {/* Desktop CTA */}
-        {/* <button
-          className="navbar-cta"
-          onClick={goToSubjects}
-        >
-          Start Practice
-          <span>→</span>
-        </button> */}
+        {/* =====================================================
+            DESKTOP SEARCH
+        ===================================================== */}
 
-        {/* Mobile Menu Button */}
-        <button
-          className={`mobile-menu-button ${
-            menuOpen ? "open" : ""
-          }`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation menu"
-          aria-expanded={menuOpen}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <div className="navbar-search desktop-search">
+
+          <div className="navbar-search-input-wrapper">
+
+            <RiSearchLine className="navbar-search-icon" />
+
+            <input
+              type="text"
+              placeholder="Search subjects..."
+              value={searchQuery}
+              onFocus={() => setSearchOpen(true)}
+              onChange={handleSearchChange}
+            />
+
+            {searchQuery && (
+              <button
+                type="button"
+                className="navbar-search-clear"
+                onClick={clearSearch}
+                aria-label="Clear search"
+              >
+                <RiCloseLine />
+              </button>
+            )}
+
+          </div>
+
+          <SearchResults />
+        </div>
+
+        {/* =====================================================
+            MOBILE SEARCH BUTTON
+        ===================================================== */}
+
+        {!searchOpen && (
+          <button
+            type="button"
+            className="mobile-search-button"
+            onClick={() => setSearchOpen(true)}
+            aria-label="Search"
+          >
+            <RiSearchLine />
+          </button>
+        )}
+
+        {/* =====================================================
+            MOBILE SEARCH BAR
+        ===================================================== */}
+
+        {searchOpen && (
+          <div className="mobile-search-container">
+
+            <div className="navbar-search-input-wrapper">
+
+              <RiSearchLine className="navbar-search-icon" />
+
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Search subjects..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+
+              {searchQuery && (
+                <button
+                  type="button"
+                  className="navbar-search-clear"
+                  onClick={clearSearch}
+                  aria-label="Clear search"
+                >
+                  <RiCloseLine />
+                </button>
+              )}
+
+            </div>
+
+            <button
+              type="button"
+              className="mobile-search-close"
+              onClick={closeSearch}
+              aria-label="Close search"
+            >
+              <RiCloseLine />
+            </button>
+
+            <SearchResults mobile />
+          </div>
+        )}
+
+        {/* =====================================================
+            MOBILE MENU BUTTON
+        ===================================================== */}
+
+        {!searchOpen && (
+          <button
+            className={`mobile-menu-button ${
+              menuOpen ? "open" : ""
+            }`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        )}
+
       </div>
 
-      {/* Mobile Navigation */}
+      {/* =======================================================
+          MOBILE NAVIGATION
+      ======================================================= */}
+
       <div
         className={`mobile-menu ${
-          menuOpen ? "show" : ""
+          menuOpen && !searchOpen ? "show" : ""
         }`}
       >
 
@@ -267,12 +604,15 @@ const Navbar = () => {
         </button>
 
         {/* Mobile Practice Sets */}
+
         <button
           type="button"
           className={`mobile-nav-link mobile-practice-toggle ${
             isPracticePage ? "active" : ""
           }`}
-          onClick={() => setPracticeOpen(!practiceOpen)}
+          onClick={() =>
+            setPracticeOpen(!practiceOpen)
+          }
         >
           <span>🎯</span>
 
@@ -289,7 +629,8 @@ const Navbar = () => {
           </span>
         </button>
 
-        {/* Mobile Subjects */}
+        {/* Mobile Practice Menu */}
+
         <div
           className={`mobile-practice-menu ${
             practiceOpen ? "show" : ""
@@ -297,6 +638,7 @@ const Navbar = () => {
         >
 
           <div className="mobile-practice-group">
+
             <div className="mobile-practice-heading">
               Technical
             </div>
@@ -311,9 +653,11 @@ const Navbar = () => {
                 {subject.name}
               </Link>
             ))}
+
           </div>
 
           <div className="mobile-practice-group">
+
             <div className="mobile-practice-heading">
               Competitive
             </div>
@@ -328,6 +672,7 @@ const Navbar = () => {
                 {subject.name}
               </Link>
             ))}
+
           </div>
 
           <Link
@@ -338,17 +683,8 @@ const Navbar = () => {
             View All Practice Sets
             <span>→</span>
           </Link>
-        </div>
 
-        {/* Start Practice */}
-        {/* <button
-          type="button"
-          className="mobile-start-button"
-          onClick={goToSubjects}
-        >
-          Start Practice
-          <span>→</span>
-        </button> */}
+        </div>
 
       </div>
     </header>

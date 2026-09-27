@@ -1,0 +1,1289 @@
+/* =========================================================
+   CODE EDITOR — PROFESSIONAL UI
+========================================================= */
+
+.code-editor-wrapper {
+  --editor-bg: #ffffff;
+  --editor-surface: #ffffff;
+  --editor-surface-2: #f8fafc;
+  --editor-border: #e2e8f0;
+  --editor-border-strong: #cbd5e1;
+  --editor-text: #0f172a;
+  --editor-muted: #64748b;
+  --editor-accent: #2563eb;
+  --editor-accent-hover: #1d4ed8;
+  --editor-code-bg: #ffffff;
+  --editor-output-bg: #ffffff;
+  --editor-console-bg: #0b1120;
+  --editor-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+
+  width: 100%;
+  min-width: 0;
+  background: var(--editor-bg);
+  color: var(--editor-text);
+  border: 1px solid var(--editor-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--editor-shadow);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.code-editor-wrapper.theme-dark {
+  --editor-bg: #181b21;
+  --editor-surface: #20242b;
+  --editor-surface-2: #282c34;
+  --editor-border: #343943;
+  --editor-border-strong: #454b55;
+  --editor-text: #f1f5f9;
+  --editor-muted: #a7b0bd;
+  --editor-code-bg: #282c34;
+  --editor-output-bg: #ffffff;
+  --editor-console-bg: #0b1120;
+  --editor-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+.code-editor-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100dvh;
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.code-editor-fullscreen .editor-header {
+  flex: 0 0 auto;
+}
+
+.code-editor-fullscreen .editor-preview-workspace {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+}
+
+.code-editor-fullscreen .editor-panel,
+.code-editor-fullscreen .preview-panel {
+  min-height: 0;
+  height: 100%;
+}
+
+.code-editor-fullscreen .code-mirror-container,
+.code-editor-fullscreen .preview-container,
+.code-editor-fullscreen .console-container {
+  min-height: 0;
+}
+body.code-editor-resizing {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+
+body.code-editor-resizing * {
+  cursor: col-resize !important;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.editor-header {
+  min-height: 72px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  background: var(--editor-surface);
+  border-bottom: 1px solid var(--editor-border);
+}
+
+.editor-title {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.editor-title-icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.08);
+}
+
+.editor-title-copy {
+  min-width: 0;
+}
+
+.editor-title h2 {
+  margin: 0;
+  color: var(--editor-text);
+  font-size: 17px;
+  line-height: 1.2;
+  font-weight: 750;
+}
+
+.editor-title span {
+  display: block;
+  margin-top: 4px;
+  color: var(--editor-muted);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.editor-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.editor-action-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--editor-muted);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 650;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.editor-action-btn svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.editor-action-btn:hover {
+  background: var(--editor-surface-2);
+  color: var(--editor-text);
+  border-color: var(--editor-border);
+  transform: translateY(-1px);
+}
+
+.editor-action-btn:active {
+  transform: translateY(0);
+}
+
+.run-btn {
+  width: auto;
+  min-width: 74px;
+  padding: 0 13px;
+  gap: 7px;
+  background: var(--editor-accent);
+  color: #ffffff;
+  border-color: var(--editor-accent);
+}
+
+.run-btn:hover {
+  background: var(--editor-accent-hover);
+  color: #ffffff;
+  border-color: var(--editor-accent-hover);
+}
+
+/* Desktop-only custom tooltip */
+@media (min-width: 701px) {
+  .editor-action-btn[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 9px);
+    left: 50%;
+    z-index: 10000;
+    transform: translate(-50%, -4px);
+    padding: 6px 9px;
+    border-radius: 7px;
+    background: #111827;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  }
+
+  .editor-action-btn[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+
+  .code-editor-fullscreen .editor-action-btn[data-tooltip]::after {
+    top: calc(100% + 7px);
+  }
+}
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.editor-preview-workspace {
+  display: grid;
+
+  grid-template-columns:
+    minmax(280px, var(--editor-split))
+    10px
+    minmax(
+      280px,
+      calc(100% - var(--editor-split) - 10px)
+    );
+
+  width: 100%;
+
+  height: 620px;
+
+  min-width: 0;
+  min-height: 0;
+
+  background: var(--editor-border);
+}
+
+.editor-panel,
+.preview-panel {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--editor-surface);
+}
+
+.editor-panel {
+  grid-column: 1;
+}
+
+.preview-panel {
+  grid-column: 3;
+}
+
+/* =========================================================
+   RESIZE DIVIDER
+========================================================= */
+
+.workspace-divider {
+  grid-column: 2;
+  position: relative;
+  z-index: 20;
+  width: 10px;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--editor-surface-2);
+  border-left: 1px solid var(--editor-border);
+  border-right: 1px solid var(--editor-border);
+  cursor: col-resize;
+  touch-action: none;
+  transition: background 0.15s ease;
+}
+
+.workspace-divider:hover,
+.workspace-divider.dragging {
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.divider-grip {
+  width: 4px;
+  height: 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.divider-grip i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--editor-muted);
+  opacity: 0.75;
+}
+
+/* =========================================================
+   EDITOR PANEL
+========================================================= */
+
+.editor-panel-top {
+  height: 50px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--editor-surface);
+  border-bottom: 1px solid var(--editor-border);
+}
+
+.panel-heading {
+  min-width: 0;
+}
+
+.panel-label {
+  display: block;
+  color: var(--editor-text);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.1;
+}
+
+.panel-subtitle {
+  display: block;
+  margin-top: 3px;
+  color: var(--editor-muted);
+  font-size: 10px;
+  line-height: 1.1;
+}
+
+.panel-hint {
+  padding: 4px 7px;
+  border: 1px solid var(--editor-border);
+  border-radius: 5px;
+  color: var(--editor-muted);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   CODE TABS
+========================================================= */
+
+.editor-tabs {
+  height: 42px;
+  display: flex;
+  align-items: stretch;
+  background: var(--editor-surface-2);
+  border-bottom: 1px solid var(--editor-border);
+}
+
+.editor-tab {
+  position: relative;
+  min-width: 76px;
+  padding: 0 17px;
+  border: none;
+  background: transparent;
+  color: var(--editor-muted);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 750;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.editor-tab:hover {
+  background: rgba(100, 116, 139, 0.08);
+  color: var(--editor-text);
+}
+
+.editor-tab.active {
+  background: var(--editor-surface);
+  color: var(--editor-text);
+}
+
+.editor-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--editor-accent);
+}
+
+.tab-icon {
+  font-size: 10px;
+  letter-spacing: 0.4px;
+}
+
+
+/* =========================================================
+   CODEMIRROR
+========================================================= */
+
+.code-mirror-container {
+  width: 100%;
+  height: calc(100% - 92px);
+  min-height: 0;
+  display: flex; /* Flexbox add karne se child 100% height sahi se capture karta hai */
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--editor-code-bg);
+  margin-bottom: 50px;
+}
+
+.code-mirror-container .cm-editor {
+  width: 100%;
+  height: 100% !important;
+  min-height: 0;
+  flex: 1; /* Pure container height occupy karne ke liye */
+  /* overflow: hidden;  <-- Is line ko REMOVE kar diya hai */
+}
+
+.code-mirror-container .cm-scroller {
+  width: 100%;
+  height: 100% !important;
+  max-height: 100%;
+
+  /* Both scrolls explicitly handled */
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+/* =========================================================
+   CUSTOM SCROLLBAR STYLING (THEME ACCORDING)
+========================================================= */
+
+/* Firefox ke liye (Standard syntax) */
+.theme-dark .code-mirror-container .cm-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: #4b5563 #1e293b; /* [Thumb] [Track] */
+}
+
+.theme-light .code-mirror-container .cm-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9; /* [Thumb] [Track] */
+}
+
+/* Chrome, Edge, Safari (WebKit browsers) ke liye */
+
+/* 1. Scrollbar Size */
+.code-mirror-container .cm-scroller::-webkit-scrollbar {
+  width: 8px;  /* Vertical scrollbar width */
+  height: 8px; /* Horizontal scrollbar height */
+}
+
+/* 2. Track (Background) */
+.theme-dark .code-mirror-container .cm-scroller::-webkit-scrollbar-track {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+.theme-light .code-mirror-container .cm-scroller::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+/* 3. Thumb (Draggable Bar) */
+.theme-dark .code-mirror-container .cm-scroller::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+  border: 2px solid #1e293b; /* Track ke sath gap/padding effect ke liye */
+}
+
+.theme-light .code-mirror-container .cm-scroller::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+  border: 2px solid #f1f5f9;
+}
+
+/* 4. Thumb Hover Effect */
+.theme-dark .code-mirror-container .cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+.theme-light .code-mirror-container .cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* 5. Corner (Jab vertical aur horizontal dono scrollbars milte hain) */
+.theme-dark .code-mirror-container .cm-scroller::-webkit-scrollbar-corner {
+  background: #1e293b;
+}
+
+.theme-light .code-mirror-container .cm-scroller::-webkit-scrollbar-corner {
+  background: #f1f5f9;
+}
+
+.theme-dark
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar-track {
+  background: #20242b;
+}
+
+.theme-dark
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 999px;
+  border: 2px solid #20242b;
+}
+
+.theme-dark
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* =========================
+   LIGHT SCROLLBAR
+========================= */
+
+.theme-light
+.code-mirror-container
+.cm-scroller {
+  scrollbar-color: #94a3b8 #f1f5f9;
+}
+
+.theme-light
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.theme-light
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.theme-light
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+  border: 2px solid #f1f5f9;
+}
+
+.theme-light
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
+.theme-light
+.code-mirror-container {
+  background: #ffffff;
+}
+
+.theme-light
+.code-mirror-container
+.cm-editor {
+  background: #ffffff;
+  color: #1e293b;
+}
+
+.theme-light
+.code-mirror-container
+.cm-scroller {
+  scrollbar-color:
+    #94a3b8
+    #f1f5f9;
+}
+
+.theme-light
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.theme-light
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.theme-light
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border: 2px solid #f1f5f9;
+
+  border-radius: 999px;
+}
+
+.theme-light
+.code-mirror-container
+.cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.theme-light
+.code-mirror-container
+.cm-gutters {
+  background: #f8fafc;
+  color: #94a3b8;
+
+  border-right: 1px solid #e2e8f0;
+}
+
+/* =========================================================
+   OUTPUT HEADER + TABS
+========================================================= */
+
+.output-header {
+  height: 50px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--editor-surface);
+  border-bottom: 1px solid var(--editor-border);
+}
+
+.output-tabs {
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+}
+
+.output-tab {
+  position: relative;
+  min-width: 92px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: none;
+  background: transparent;
+  color: var(--editor-muted);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  transition:
+    color 0.18s ease,
+    background 0.18s ease;
+}
+
+.output-tab svg {
+  width: 14px;
+  height: 14px;
+}
+
+.output-tab:hover {
+  color: var(--editor-text);
+  background: var(--editor-surface-2);
+}
+
+.output-tab.active {
+  color: var(--editor-text);
+}
+
+.output-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+  height: 2px;
+  background: var(--editor-accent);
+  border-radius: 2px 2px 0 0;
+}
+
+.output-tab-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.console-count {
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.preview-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  border: 1px solid #bbf7d0;
+  border-radius: 20px;
+  background: #f0fdf4;
+  color: #15803d;
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+.preview-container {
+  height: calc(100% - 50px);
+  min-height: 470px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.preview-container iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
+  background: #ffffff;
+}
+
+/* =========================================================
+   CONSOLE
+========================================================= */
+
+.console-container {
+  height: calc(100% - 50px);
+  min-height: 470px;
+  overflow: hidden;
+  background: var(--editor-console-bg);
+}
+
+.console-clear-btn {
+  padding: 6px 10px;
+  border: 1px solid var(--editor-border-strong);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--editor-muted);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 650;
+  transition: 0.18s ease;
+}
+
+.console-clear-btn:hover:not(:disabled) {
+  background: var(--editor-surface-2);
+  color: var(--editor-text);
+}
+
+.console-clear-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.console-body {
+  height: 100%;
+  overflow: auto;
+  padding: 12px 14px;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+}
+
+.console-empty {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #64748b;
+  text-align: center;
+}
+
+.console-empty svg {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 3px;
+  opacity: 0.65;
+}
+
+.console-empty strong {
+  color: #cbd5e1;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
+}
+
+.console-empty span {
+  max-width: 260px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.console-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  color: #cbd5e1;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.console-type {
+  min-width: 44px;
+  color: #60a5fa;
+  text-transform: uppercase;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.console-error .console-type {
+  color: #f87171;
+}
+
+.console-warn .console-type {
+  color: #fbbf24;
+}
+
+.console-message {
+  flex: 1;
+}
+
+/* =========================================================
+   CODE SCROLLBAR
+========================================================= */
+
+.code-mirror-container .cm-scroller::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.code-mirror-container .cm-scroller::-webkit-scrollbar-track {
+  background: #20242b;
+}
+
+.code-mirror-container .cm-scroller::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border: 2px solid #20242b;
+  border-radius: 999px;
+}
+
+.code-mirror-container .cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+.theme-light .code-mirror-container .cm-scroller::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.theme-light .code-mirror-container .cm-scroller::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-color: #f1f5f9;
+}
+
+.theme-light .code-mirror-container .cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================================
+   MOBILE FULLSCREEN VIEW SWITCHER
+========================================================= */
+
+.mobile-fullscreen-switcher {
+  display: none;
+  align-items: center;
+  margin-left: auto;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--editor-border);
+  border-radius: 8px;
+  background: var(--editor-surface-2);
+}
+
+.mobile-view-btn {
+  height: 28px;
+  padding: 0 9px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--editor-muted);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.mobile-view-btn.active {
+  background: var(--editor-surface);
+  color: var(--editor-text);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+
+@media (max-width: 1050px) {
+  .editor-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .editor-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .editor-preview-workspace {
+    grid-template-columns:
+      minmax(240px, var(--editor-split))
+      10px
+      minmax(240px, calc(100% - var(--editor-split) - 10px));
+  }
+}
+
+@media (max-width: 900px) {
+  .editor-action-btn {
+    width: 36px;
+  }
+
+  .run-btn {
+    width: auto;
+  }
+
+  .editor-preview-workspace {
+    min-height: 500px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .code-editor-wrapper {
+    border-radius: 12px;
+  }
+
+  .editor-header {
+    min-height: auto;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .editor-title-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .editor-title h2 {
+    font-size: 15px;
+  }
+
+  .editor-actions {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    width: 100%;
+    gap: 5px;
+  }
+
+  .editor-action-btn,
+  .run-btn {
+    width: 100%;
+    min-width: 0;
+    height: 34px;
+    padding: 0;
+  }
+
+  .editor-action-btn span {
+    display: none;
+  }
+
+  .editor-preview-workspace {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    gap: 1px;
+    background: var(--editor-border);
+  }
+
+  .editor-panel,
+  .preview-panel {
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .editor-panel {
+    height: 460px;
+  }
+
+  .preview-panel {
+    height: 420px;
+  }
+
+  .workspace-divider {
+    display: none;
+  }
+
+  .editor-panel-top {
+    padding: 0 12px;
+  }
+
+  .editor-tabs {
+    overflow-x: auto;
+  }
+
+  .editor-tab {
+    flex: 1;
+    min-width: 70px;
+  }
+
+  .code-mirror-container {
+    height: calc(100% - 92px);
+    min-height: 0;
+  }
+
+  .output-header {
+    padding: 0 10px;
+  }
+
+  .output-tab {
+    min-width: 86px;
+  }
+
+  .preview-container,
+  .console-container {
+    height: calc(100% - 50px);
+    min-height: 0;
+  }
+}
+
+/* =========================================================
+   MOBILE FULLSCREEN MODE
+========================================================= */
+
+@media (max-width: 700px) {
+  .code-editor-fullscreen {
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .code-editor-fullscreen .editor-header {
+    position: relative;
+    min-height: 62px;
+  }
+
+  .code-editor-fullscreen .mobile-fullscreen-switcher {
+    display: inline-flex;
+  }
+
+  .code-editor-fullscreen .editor-preview-workspace {
+    height: calc(100dvh - 62px);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .code-editor-fullscreen .editor-panel,
+  .code-editor-fullscreen .preview-panel {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .code-editor-fullscreen .editor-panel-top {
+    height: 48px;
+  }
+
+  .code-editor-fullscreen .editor-tabs {
+    height: 42px;
+  }
+
+  .code-editor-fullscreen .code-mirror-container {
+    height: calc(100% - 90px);
+    min-height: 0;
+  }
+
+  .code-editor-fullscreen .preview-container,
+  .code-editor-fullscreen .console-container {
+    height: calc(100% - 50px);
+    min-height: 0;
+  }
+
+  .code-editor-fullscreen .editor-preview-workspace.mobile-show-editor .preview-panel {
+    display: none;
+  }
+
+  .code-editor-fullscreen .editor-preview-workspace.mobile-show-editor .editor-panel {
+    display: block;
+    width: 100%;
+  }
+
+  .code-editor-fullscreen .editor-preview-workspace.mobile-show-output .editor-panel {
+    display: none;
+  }
+
+  .code-editor-fullscreen .editor-preview-workspace.mobile-show-output .preview-panel {
+    display: block;
+    width: 100%;
+  }
+
+  .code-editor-fullscreen .workspace-divider {
+    display: none;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+
+@media (max-width: 500px) {
+  .editor-actions {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .editor-action-btn {
+    height: 32px;
+  }
+
+  .editor-action-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .editor-panel {
+    height: 420px;
+  }
+
+  .preview-panel {
+    height: 380px;
+  }
+
+  .editor-tabs,
+  .output-header {
+    height: 40px;
+  }
+
+  .editor-tab {
+    min-width: 65px;
+    padding: 0 10px;
+  }
+
+  .output-tab {
+    min-width: 78px;
+    padding: 0 8px;
+  }
+
+  .panel-subtitle,
+  .panel-hint {
+    display: none;
+  }
+
+  .preview-container,
+  .console-container {
+    height: calc(100% - 40px);
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+  .code-editor-fullscreen .editor-title {
+    gap: 8px;
+  }
+
+  .code-editor-fullscreen .mobile-fullscreen-switcher {
+    margin-left: 4px;
+  }
+
+  .code-editor-fullscreen .mobile-view-btn {
+    padding: 0 7px;
+  }
+
+  .editor-header {
+    padding: 10px;
+  }
+
+  .editor-title-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+  .editor-title h2 {
+    font-size: 14px;
+  }
+
+  .editor-title span {
+    font-size: 9px;
+  }
+
+  .editor-actions {
+    gap: 4px;
+  }
+
+  .editor-action-btn {
+    height: 30px;
+  }
+
+  .editor-panel {
+    height: 390px;
+  }
+
+  .preview-panel {
+    height: 350px;
+  }
+}
+
+/* No hover tooltip / hover behavior on touch-sized screens */
+@media (max-width: 700px) {
+  .editor-action-btn:hover {
+    transform: none;
+  }
+
+  .editor-action-btn[data-tooltip]::after {
+    display: none !important;
+  }
+}

@@ -7,6 +7,8 @@ import ErrorMessage from "../components/ErrorMessage";
 import { getSubjects } from "../services/api";
 import "./home.css"
 
+
+
 function Home() {
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -1,6 +1,6 @@
-// const API_URL = "https://imt-study-zone.onrender.com/api";
+const API_URL = "https://imt-study-zone.onrender.com/api";
 
-const API_URL = "http://localhost:5000/api";
+// const API_URL = "http://localhost:5000/api";
 
 
 export const getSubjects = async () => {

@@ -1,6 +1,6 @@
-/* =========================================
+/* =========================================================
    NAVBAR
-========================================= */
+========================================================= */
 
 .navbar {
   position: sticky;
@@ -14,6 +14,7 @@
 }
 
 .navbar-container {
+  position: relative;
   width: 100%;
   max-width: 1200px;
   height: 70px;
@@ -24,9 +25,9 @@
   align-items: center;
 }
 
-/* =========================================
+/* =========================================================
    LOGO
-========================================= */
+========================================================= */
 
 .navbar-logo {
   display: inline-flex;
@@ -50,6 +51,7 @@
   overflow: hidden;
 
   background: linear-gradient(135deg, #4f46e5, #7c3aed);
+
   box-shadow: 0 5px 15px rgba(79, 70, 229, 0.2);
 }
 
@@ -70,17 +72,17 @@
   color: #4f46e5;
 }
 
-/* =========================================
+/* =========================================================
    DESKTOP MENU
-========================================= */
+========================================================= */
 
 .navbar-menu {
   margin-left: auto;
-  margin-right: 24px;
+  margin-right: 18px;
 
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .nav-link {
@@ -92,7 +94,7 @@
   gap: 5px;
 
   min-height: 40px;
-  padding: 0 12px;
+  padding: 0 11px;
 
   border: 0;
   border-radius: 8px;
@@ -101,6 +103,7 @@
   color: #4b5563;
 
   text-decoration: none;
+
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
@@ -125,8 +128,8 @@
   content: "";
 
   position: absolute;
-  left: 12px;
-  right: 12px;
+  left: 11px;
+  right: 11px;
   bottom: 2px;
 
   height: 2px;
@@ -139,12 +142,13 @@
   appearance: none;
 }
 
-/* =========================================
+/* =========================================================
    PRACTICE DROPDOWN
-========================================= */
+========================================================= */
 
 .practice-dropdown-wrapper {
   position: relative;
+  
 }
 
 .practice-dropdown-trigger {
@@ -152,7 +156,10 @@
 }
 
 .dropdown-arrow {
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+
+  font-size: 15px;
   line-height: 1;
 
   transition: transform 0.2s ease;
@@ -163,50 +170,40 @@
   transform: rotate(180deg);
 }
 
-/* Dropdown */
+/* =========================================================
+   PRACTICE DROPDOWN MENU
+========================================================= */
 
 .practice-dropdown-menu {
   position: absolute;
-
   top: calc(100% + 9px);
   right: -25px;
-
-  width: 520px;
-
+  width: 600px;
   padding: 18px;
-
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
-
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-
   background: #ffffff;
-
   box-shadow:
     0 18px 40px rgba(15, 23, 42, 0.12),
     0 3px 10px rgba(15, 23, 42, 0.04);
-
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-
   transform: translateY(-5px);
-
   transition:
     opacity 0.18s ease,
     visibility 0.18s ease,
     transform 0.18s ease;
+  
 }
-
-/* Keep dropdown connected to navbar */
 
 .practice-dropdown-menu::before {
   content: "";
 
   position: absolute;
-
   top: -10px;
   right: 35px;
 
@@ -214,19 +211,18 @@
   height: 12px;
 }
 
-/* Show */
-
 .practice-dropdown-wrapper:hover .practice-dropdown-menu,
 .practice-dropdown-wrapper.open .practice-dropdown-menu {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+
   transform: translateY(0);
 }
 
-/* =========================================
+/* =========================================================
    DROPDOWN COLUMNS
-========================================= */
+========================================================= */
 
 .practice-dropdown-column {
   min-width: 0;
@@ -243,9 +239,9 @@
   border-bottom: 1px solid #eef2f7;
 }
 
-/* =========================================
+/* =========================================================
    SUBJECT LIST
-========================================= */
+========================================================= */
 
 .practice-subject-list {
   display: grid;
@@ -255,8 +251,6 @@
 
   padding-top: 7px;
 }
-
-/* No scrollbar */
 
 .practice-subject-link {
   display: flex;
@@ -268,6 +262,7 @@
   border-radius: 7px;
 
   color: #4b5563;
+
   text-decoration: none;
 
   font-size: 12px;
@@ -283,9 +278,9 @@
   background: #eef2ff;
 }
 
-/* =========================================
+/* =========================================================
    ALL PRACTICE SETS
-========================================= */
+========================================================= */
 
 .practice-all-subjects {
   grid-column: 1 / -1;
@@ -295,7 +290,6 @@
   justify-content: space-between;
 
   min-height: 42px;
-
   padding: 0 13px;
 
   border-radius: 9px;
@@ -318,75 +312,380 @@
   transform: translateY(-1px);
 }
 
-.practice-all-subjects span:last-child {
+.practice-all-subjects span {
   font-size: 17px;
 }
 
-/* =========================================
-   DESKTOP CTA
-========================================= */
+/* =========================================================
+   SEARCH
+========================================================= */
 
-.navbar-cta {
+.navbar-search {
+  position: relative;
+
+  width: 210px;
   flex-shrink: 0;
+}
 
-  display: inline-flex;
+.navbar-search-input-wrapper {
+  width: 100%;
+  height: 40px;
+
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
 
-  min-height: 40px;
-  padding: 0 16px;
-
-  border: 0;
+  border: 1px solid #e5e7eb;
   border-radius: 9px;
 
-  background: #4f46e5;
-  color: #ffffff;
+  background: #f8fafc;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.navbar-search-input-wrapper:focus-within {
+  border-color: #c7d2fe;
+  background: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
+}
+
+.navbar-search-icon {
+  flex-shrink: 0;
+
+  margin-left: 11px;
+
+  color: #6b7280;
+  font-size: 18px;
+}
+
+.navbar-search-input-wrapper input {
+  width: 100%;
+  height: 100%;
+
+  padding: 0 8px;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #111827;
 
   font-family: inherit;
   font-size: 13px;
+  font-weight: 500;
+}
+
+.navbar-search-input-wrapper input::placeholder {
+  color: #9ca3af;
+}
+
+.navbar-search-clear {
+  width: 30px;
+  height: 30px;
+
+  margin-right: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #6b7280;
+
+  font-size: 18px;
+
+  cursor: pointer;
+}
+
+.navbar-search-clear:hover {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+/* =========================================================
+   SEARCH RESULTS
+========================================================= */
+
+.navbar-search-results {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  right: 0;
+
+  width: 330px;
+
+  padding: 8px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 18px 40px rgba(15, 23, 42, 0.13),
+    0 4px 12px rgba(15, 23, 42, 0.05);
+
+  overflow: hidden;
+
+  z-index: 1100;
+}
+
+.search-results-title {
+  padding: 7px 10px 8px;
+
+  color: #6b7280;
+
+  font-size: 11px;
   font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.search-result-subject {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+
+  margin-bottom: 4px;
+}
+
+.search-result-item {
+  width: 100%;
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 7px 9px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+
+  text-align: left;
 
   cursor: pointer;
 
-  box-shadow: 0 5px 14px rgba(79, 70, 229, 0.18);
+  font-family: inherit;
+
+  transition: background 0.18s ease;
+}
+
+.search-result-item:hover {
+  background: #f5f7ff;
+}
+
+.search-result-icon {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  font-size: 16px;
+}
+
+.practice-icon {
+  background: #eef2ff;
+}
+
+.notes-icon {
+  background: #f0fdf4;
+}
+
+.search-result-content {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.search-result-content strong {
+  color: #111827;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.search-result-content small {
+  color: #9ca3af;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.search-result-arrow {
+  flex-shrink: 0;
+
+  color: #9ca3af;
+
+  font-size: 16px;
 
   transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+    color 0.18s ease,
+    transform 0.18s ease;
 }
 
-.navbar-cta:hover {
-  background: #4338ca;
-  transform: translateY(-1px);
+.search-result-item:hover .search-result-arrow {
+  color: #4f46e5;
+  transform: translateX(2px);
 }
 
-.navbar-cta span {
-  font-size: 17px;
+/* =========================================================
+   NO SEARCH RESULT
+========================================================= */
+
+.search-no-results {
+  min-height: 65px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 8px 10px;
 }
 
-/* =========================================
-   MOBILE BUTTON
-========================================= */
+.search-no-results-icon {
+  width: 34px;
+  height: 34px;
 
-.mobile-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #f8fafc;
+
+  font-size: 16px;
+}
+
+.search-no-results strong {
+  display: block;
+
+  color: #374151;
+
+  font-size: 13px;
+}
+
+.search-no-results span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   MOBILE SEARCH BUTTON
+========================================================= */
+
+.mobile-search-button {
   display: none;
-  width: 42px;
-  height: 42px;
-  padding: 9px;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #e5e7eb;
   border-radius: 9px;
   background: #ffffff;
+  color: #374151;
+  font-size: 21px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mobile-search-button:hover {
+  color: #4f46e5;
+  background: #f8faff;
+}
+
+/* =========================================================
+   MOBILE SEARCH CONTAINER
+========================================================= */
+
+.mobile-search-container {
+  display: none;
+}
+
+/* =========================================================
+   MOBILE SEARCH CLOSE
+========================================================= */
+
+.mobile-search-close {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.mobile-menu-button {
+  display: none;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 9px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+
+  background: #ffffff;
+
   cursor: pointer;
 }
 
 .mobile-menu-button span {
   display: block;
+
   width: 100%;
   height: 2px;
+
   margin: 5px 0;
+
   border-radius: 5px;
+
   background: #374151;
+
   transition:
     transform 0.25s ease,
     opacity 0.25s ease;
@@ -404,15 +703,19 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* =========================================
+/* =========================================================
    MOBILE MENU
-========================================= */
+========================================================= */
 
 .mobile-menu {
   display: none;
+
   padding: 8px 16px 18px;
+
   border-top: 1px solid #f1f5f9;
+
   background: #ffffff;
+
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.07);
 }
 
@@ -420,18 +723,27 @@
   display: flex;
   align-items: center;
   gap: 12px;
+
   width: 100%;
   min-height: 46px;
+
   padding: 0 12px;
+
   border: 0;
   border-radius: 9px;
+
   background: transparent;
+
   color: #374151;
+
   text-decoration: none;
+
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
+
   text-align: left;
+
   cursor: pointer;
 }
 
@@ -443,13 +755,15 @@
 
 .mobile-nav-link > span:first-child {
   width: 24px;
+
   text-align: center;
+
   flex-shrink: 0;
 }
 
-/* =========================================
+/* =========================================================
    MOBILE PRACTICE
-========================================= */
+========================================================= */
 
 .mobile-practice-toggle {
   justify-content: flex-start;
@@ -461,7 +775,10 @@
 
 .mobile-dropdown-arrow {
   width: auto !important;
+
   font-size: 20px !important;
+
+  transition: transform 0.2s ease;
 }
 
 .mobile-dropdown-arrow.rotate {
@@ -470,18 +787,17 @@
 
 .mobile-practice-menu {
   display: none;
-  margin: 0 0 7px 36px;
+  margin: 0 0 7px 0;
   padding: 7px 8px;
   border-left: 2px solid #e0e7ff;
   border-radius: 0 9px 9px 0;
   background: #fafbff;
+  height: 500px;
+  overflow: scroll;
 }
 
 .mobile-practice-menu.show {
   display: block;
-  margin-left: 0px;
-  max-height: 500px;
-  overflow-y: scroll;
 }
 
 .mobile-practice-group {
@@ -490,7 +806,9 @@
 
 .mobile-practice-heading {
   padding: 7px 8px;
+
   color: #111827;
+
   font-size: 12px;
   font-weight: 800;
 }
@@ -498,13 +816,20 @@
 .mobile-practice-subject {
   display: flex;
   align-items: center;
+
   min-height: 36px;
+
   padding: 5px 8px;
+
   border-radius: 7px;
+
   color: #4b5563;
+
   text-decoration: none;
+
   font-size: 13px;
   font-weight: 600;
+
   transition:
     color 0.18s ease,
     background 0.18s ease;
@@ -515,19 +840,29 @@
   background: #eef2ff;
 }
 
-/* All subjects mobile */
+/* =========================================================
+   MOBILE ALL SUBJECTS
+========================================================= */
 
 .mobile-all-subjects {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   min-height: 42px;
+
   margin-top: 8px;
+
   padding: 0 11px;
+
   border-radius: 8px;
+
   background: #4f46e5;
+
   color: #ffffff;
+
   text-decoration: none;
+
   font-size: 13px;
   font-weight: 700;
 }
@@ -536,57 +871,25 @@
   font-size: 17px;
 }
 
-/* =========================================
-   MOBILE START
-========================================= */
-
-.mobile-start-button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 100%;
-  min-height: 46px;
-
-  margin-top: 10px;
-  padding: 0 15px;
-
-  border: 0;
-  border-radius: 9px;
-
-  background: #4f46e5;
-  color: #ffffff;
-
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
-
-  cursor: pointer;
-}
-
-.mobile-start-button span {
-  font-size: 18px;
-}
-
-/* =========================================
+/* =========================================================
    TABLET
-========================================= */
+========================================================= */
 
-@media (max-width: 950px) {
+@media (max-width: 1050px) {
   .navbar-container {
     padding: 0 16px;
   }
 
   .navbar-menu {
-    margin-right: 12px;
+    margin-right: 10px;
   }
 
   .nav-link {
     padding: 0 8px;
   }
 
-  .navbar-cta {
-    padding: 0 12px;
+  .navbar-search {
+    width: 185px;
   }
 
   .practice-dropdown-menu {
@@ -594,31 +897,52 @@
   }
 }
 
-/* =========================================
+/* =========================================================
    MOBILE
-========================================= */
+========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
+
   .navbar-container {
     height: 64px;
+
     padding: 0 10px;
-    width: 100%;
+
+    gap: 8px;
+
     justify-content: space-between;
   }
 
+  /* Hide desktop elements */
+
   .navbar-menu,
-  .navbar-cta {
+  .desktop-search {
     display: none;
   }
 
+  /* Mobile search button */
+
+  .mobile-search-button {
+    display: flex;
+
+    margin-left: auto;
+  }
+
+  /* Mobile menu button */
+
   .mobile-menu-button {
     display: block;
+
     flex-shrink: 0;
   }
+
+  /* Mobile menu */
 
   .mobile-menu.show {
     display: block;
   }
+
+  /* Logo */
 
   .logo-icon {
     width: 35px;
@@ -628,15 +952,47 @@
   .logo-text {
     font-size: 17px;
   }
+
+  /* Mobile search mode */
+
+  .navbar-container:has(.mobile-search-container) {
+    justify-content: stretch;
+  }
+
+  .mobile-search-container {
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+  }
+
+  .mobile-search-container .navbar-search-input-wrapper {
+    flex: 1;
+  }
+
+  .mobile-search-container .navbar-search-results {
+    position: absolute;
+
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+
+    width: 100%;
+  }
 }
 
-/* =========================================
+/* =========================================================
    SMALL MOBILE
-========================================= */
+========================================================= */
 
-@media (max-width: 380px) {
+@media (max-width: 450px) {
+
   .navbar-container {
-    padding: 0 12px;
+    padding: 0 10px;
   }
 
   .logo-text {
@@ -644,16 +1000,54 @@
   }
 
   .logo-icon {
-    width: 33px;
-    height: 33px;
+    width: 34px;
+    height: 34px;
   }
 
-  .mobile-menu {
-    padding-left: 12px;
-    padding-right: 12px;
+  .mobile-search-button {
+    width: 39px;
+    height: 39px;
+  }
+
+  .mobile-menu-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .search-result-content strong {
+    font-size: 12px;
+  }
+
+  .search-result-content small {
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .navbar-container {
+    padding: 0 8px;
+  }
+
+  .logo-text {
+    font-size: 15px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
   }
 
   .mobile-practice-menu {
-    margin-left: 30px;
+    margin-left: 0;
+  }
+
+  .mobile-menu {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }

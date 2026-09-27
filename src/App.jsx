@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Notes from "./pages/Notes";
 import SubjectNotes from "./pages/SubjectNotes";
 import PracticeSets from "./pages/PracticeSets";
+import Coding from "./pages/Coding";
 
 function App() {
   return (
@@ -22,6 +23,11 @@ function App() {
         <Route
           path="/"
           element={<Home />}
+        />
+
+        <Route
+          path="/coding"
+          element={<Coding />}
         />
 
         <Route
