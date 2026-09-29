@@ -17,6 +17,7 @@ import {
   FiTerminal,
   FiSun,
   FiMoon,
+   FiHome,
 } from "react-icons/fi";
 
 import "./CodeEditor.css";
@@ -568,7 +569,11 @@ const [jsCode, setJsCode] = useState(() =>
   // Preview / Console are tabs inside the output panel.
   const [outputTab, setOutputTab] = useState("preview");
 
-
+useEffect(() => {
+  if (window.innerWidth <= 700) {
+    setIsFullscreen(true);
+  }
+}, []);
 
 // Code change hone par preview automatically sync rakhne ke liye:
 useEffect(() => {
@@ -1111,6 +1116,17 @@ useEffect(() => {
               Preview
             </button>
           </div>
+
+          <button
+  className="mobile-home-btn"
+  onClick={() => {
+    window.location.href = "/";
+  }}
+  aria-label="Home"
+>
+  <FiHome />
+</button>
+
         </div>
 
         <div className="editor-actions">
@@ -1180,7 +1196,7 @@ useEffect(() => {
           </button>
 
           <button
-            className="editor-action-btn"
+            className="editor-action-btn full"
             onClick={() => {
               setIsFullscreen((prev) => {
                 const next = !prev;

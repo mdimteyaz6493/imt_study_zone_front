@@ -399,7 +399,7 @@ const Navbar = () => {
                   Technical
                 </div>
 
-                <div className="practice-subject-list">
+                <div className="dropdown_practice-subject-list">
                   {technicalSubjects.map((subject) => (
                     <Link
                       key={subject._id}
@@ -419,7 +419,7 @@ const Navbar = () => {
                   Competitive
                 </div>
 
-                <div className="practice-subject-list">
+                <div className="dropdown_practice-subject-list">
                   {competitiveSubjects.map((subject) => (
                     <Link
                       key={subject._id}

@@ -52,40 +52,27 @@
 
 .practice-sets-label {
   display: inline-block;
-
   margin-bottom: 12px;
-
   color: #6366f1;
-
   font-size: 11px;
   font-weight: 800;
-
   letter-spacing: 1.5px;
 }
 
 .practice-sets-header h1 {
   margin: 0;
-
   font-size: clamp(38px, 5vw, 58px);
-
   line-height: 1.1;
-
   letter-spacing: -2px;
-
   font-weight: 800;
-
   color: #111827;
 }
 
 .practice-sets-header p {
   max-width: 620px;
-
   margin: 17px 0 0;
-
   color: #64748b;
-
   font-size: 15px;
-
   line-height: 1.8;
 }
 
@@ -96,7 +83,6 @@
 
 .practice-sets-content {
   padding: 80px 0 110px;
-
   background: #ffffff;
 }
 
@@ -107,12 +93,9 @@
 
 .practice-category-grid {
   display: grid;
-
   grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
+    repeat(1, minmax(0, 1fr));
   gap: 28px;
-
   align-items: start;
 }
 
@@ -123,15 +106,12 @@
 
 .practice-category {
   padding: 28px;
-
   border: 1px solid #e5e7eb;
-
   border-radius: 22px;
-
   background: #ffffff;
-
   box-shadow:
     0 12px 40px rgba(15, 23, 42, 0.05);
+ 
 }
 
 
@@ -141,53 +121,36 @@
 
 .category-header {
   display: flex;
-
   align-items: flex-start;
-
   gap: 15px;
-
   padding-bottom: 22px;
-
   margin-bottom: 20px;
-
   border-bottom: 1px solid #edf0f5;
 }
 
 .category-icon {
   width: 48px;
   height: 48px;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
-
   border-radius: 13px;
-
   background: #eef2ff;
-
   font-size: 22px;
 }
 
 .category-header h2 {
   margin: 0;
-
   color: #1e293b;
-
   font-size: 20px;
-
   font-weight: 800;
 }
 
 .category-header p {
   margin: 5px 0 0;
-
   color: #94a3b8;
-
   font-size: 11px;
-
   line-height: 1.6;
 }
 
@@ -197,9 +160,11 @@
 ========================================================= */
 
 .practice-subject-list {
-  display: grid;
-
-  gap: 10px;
+   display: grid;
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
 }
 
 
@@ -209,23 +174,15 @@
 
 .practice-subject-item {
   display: flex;
-
+  flex-direction: column;
   align-items: center;
-
   gap: 12px;
-
-  min-height: 55px;
-
-  padding: 9px 13px;
-
+  min-height: 200px;
+  padding: 20px 10px;
   border: 1px solid #edf0f5;
-
   border-radius: 12px;
-
   background: #f8fafc;
-
   text-decoration: none;
-
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -235,11 +192,8 @@
 
 .practice-subject-item:hover {
   transform: translateX(4px);
-
   border-color: #c7d2fe;
-
   background: #eef2ff;
-
   box-shadow:
     0 8px 20px rgba(79, 70, 229, 0.07);
 }
@@ -250,25 +204,18 @@
 ========================================================= */
 
 .practice-subject-icon {
-  width: 36px;
-  height: 36px;
-
+  width: 100px;
+  height: 100px;
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
-
-  border-radius: 9px;
-
-  background: #ffffff;
-
   font-size: 18px;
-
-  border: 1px solid #e5e7eb;
 }
 
+.practice-subject-icon .subject-icon-image{
+  height: 100%;
+}
 
 /* =========================================================
    SUBJECT NAME
@@ -276,12 +223,16 @@
 
 .practice-subject-item span {
   flex: 1;
-
   color: #334155;
-
   font-size: 13px;
-
   font-weight: 700;
+}
+
+.practice-subject-item p{
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 10px;
+  color: rgb(153, 153, 153);
 }
 
 
@@ -448,10 +399,26 @@
     font-size: 10px;
   }
 
+.practice-subject-list {
+   display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-items: start;
+}
   .practice-subject-item {
-    min-height: 52px;
-    padding: 0;
+    min-height: 80px;
+    padding: 20px 10px;
   }
+
+
+.practice-subject-icon {
+  width: 80px;
+  height: 80px;
+ 
+}
+
+
 
   .practice-subject-item span {
     font-size: 12px;
